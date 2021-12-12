@@ -1,104 +1,53 @@
 import React from 'react';
-import Particles from 'react-tsparticles';
+import Navbar from './components/Navbar';
+import hosp5 from './hosp6.jpg';
+import Fade from 'react-reveal';
 
 const About = () => {
+	const stylee={backgroundColor:"#F2F3F4",padding:"30px",textAlign:"center",width:"99%",borderRadius:"50px",bottom:"0%"}
+	const style_name={fontstyle:"bold",fontFamily:"PT Sans Narrow",fontSize:"50px",margin:"20px"};
 return (
-	<div
-	style={{
-		display: 'flex',
-		justifyContent: 'Right',
-		alignItems: 'Right',
-		height: '100vh'
-	}}
-	>
-		{/* 
-    <Particles
-        id="tsparticles"
-        options={{
-          background: {
-            color: {
-            // value: "#0d47a1",
-			value:"white"
-			// value:"black"
-            },
-          },
-          fpsLimit: 60,
-          interactivity: {
-            detectsOn: "canvas",
-            events: {
-              onClick: {
-                enable: true,
-                mode: "push",
-              },
-              onHover: {
-                enable: true,
-                mode: "repulse",
-              },
-              resize: true,
-            },
-            modes: {
-              bubble: {
-                distance: 400,
-                duration: 2,
-                opacity: 0.8,
-                size: 40,
-              },
-              push: {
-                quantity: 4,
-              },
-              repulse: {
-                distance: 200,
-                duration: 0.4,
-              },
-            },
-          },
-          particles: {
-            color: {
-              value: "#ffffff",
-            },
-            links: {
-              color: "#ffffff",
-              distance: 150,
-              enable: true,
-              opacity: 0.5,
-              width: 1,
-            },
-            collisions: {
-              enable: true,
-            },
-            move: {
-              direction: "none",
-              enable: true,
-              outMode: "bounce",
-              random: false,
-              speed: 6,
-              straight: false,
-            },
-            number: {
-              density: {
-                enable: true,
-                value_area: 800,
-              },
-              value: 80,
-            },
-            opacity: {
-              value: 0.5,
-            },
-            shape: {
-              type: "circle",
-            },
-            size: {
-              random: true,
-              value: 5,
-            },
-          },
-          detectRetina: true,
-        }}
-    />
-	*/}
-	<h1 style={{color:"black"}}>GeeksforGeeks is a Computer Science portal for geeks</h1>
-	</div>
+  			<div className = "container emp-profile" style={{backgroundImage:`url(${hosp5})`,backgroundSize:"cover",backgroundRepeat:"no-repeat",width:"100%",height:"100vh"}}>
+          <Navbar/>
+				<form method = "">
+					<div className = "row">
+						<div className = "col-md-4">
+							{/* <img src = {aboutus} style={{width:"100%"}} alt="about" /> */}
+						</div>
+
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+		        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+		        <link href="https://fonts.googleapis.com/css2?family=Fruktur&family=Lobster&family=Open+Sans+Condensed:wght@300&family=PT+Sans+Narrow&family=Petemoss&display=swap" rel="stylesheet"/>
+						<div className = "col-md-4">
+							<div className = "profile-head">
+              <Fade left>
+                <h1 style={style_name}>ABOUT US</h1>
+                </Fade>
+                <Fade right>
+								<p style={style_name}>We are an organization started in april of 2020.<br/>
+                  We aim to make health evaluation accessible even to the remote areas, at a time when we are succumed to our houses.<br/>
+                  We have put together this website where you can check your health at just your fingertips.<br/>
+                  What are you waiting for??<br/>
+                  Sign in to keep in track with your health!!
+                </p>
+                </Fade>
+						</div>
+					</div>
+          </div>
+				</form>
+        <footer className="footer" style={stylee}>
+			<a href="#" style={{color:"black",border:"10px",padding:"10px"}}><i className="fa fa-facebook-official"></i></a>
+			<a href="#" style={{color:"black",border:"10px",padding:"10px"}}><i className="fa fa-pinterest-p"></i></a>
+			<a href="#" style={{color:"black",border:"10px",padding:"10px"}}><i className="fa fa-twitter"></i></a>
+			<a href="#" style={{color:"black",border:"10px",padding:"10px"}}><i className="fa fa-flickr"></i></a>
+			<a href="#" style={{color:"black",border:"10px",padding:"10px"}}><i className="fa fa-linkedin"></i></a>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+		</footer>
+
+			</div>
 );
+
 };
 
 export default About;
+
