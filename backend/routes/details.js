@@ -1,5 +1,6 @@
 const router=require('express').Router();
 let Detail=require('../models/detail.model');
+const bcrypt=require('bcryptjs');
 
 router.route('/').get((req,res)=>{
     Detail.find()
@@ -7,48 +8,65 @@ router.route('/').get((req,res)=>{
     .catch(err=>res.status(400).json('Error: '+err));
 });
 
-router.route('/add').post((req,res)=>{
+router.route('/add').post(async(req,res)=>{
     const username=req.body.username;
+    const password=req.body.password;
+    const password_c=req.body.password_c;
     const emailId=req.body.emailId;
     const contactno=Number(req.body.contactno);
     const address=req.body.address;
 
+
+    if(!username || !password || !password_c || !emailId || !contactno || !address){
+        return res.status(400).json({error: "Please fill the field properly"});
+    }
+
+    if(password!=password_c ){
+        return res.status(400).json({error: "Please fill the fields of password and confirm password properly"});
+    }
+
+    Detail.findOne({emailId:emailId})
+    .then((userExist)=>{
+        if(userExist){
+            return res.status(400).json({error:"Email Id already exists"})
+        }
+    });
     const newDetail= new Detail({
         username,
+        password,
+        password_c,
         emailId,
         contactno,
         address
     });
-
-    newDetail.save()
+    
+    await newDetail.save()
     .then(()=>res.json('Detail added'))
     .catch(err=>res.status(400).json('Error: '+err));
 });
 
-router.route('/:id').get((req,res)=>{
-    Detail.findById(req.params.id)
-    .then(details=>res.json(details))
-    .catch(err=>res.status(400).json('Error: '+err));
-});
-
-router.route('/:id').delete((req,res)=>{
-    Detail.findByIdAndDelete(req.params.id)
-    .then(()=>res.json('Details deleted.'))
-    .catch(err=>res.status(400).json('Error: '+err));
-});
-
-router.route('/update/:id').post((req,res)=>{
-    Detail.findById(req.params.id)
-    .then(details=>{
-        details.username=req.body.username;
-        details.emailId=req.body.emailId;
-        details.contactno=Number(req.body.contactno);
-        details.address=req.body.address;
-        details.save()
-        .then(()=>res.json('Detail updated!'))
-        .catch(err=>res.status(400).json('Error: '+err));
-    })
-    .catch(err=>res.status(400).json('Error: '+err));
+router.route('/signin').post(async(req,res)=>{
+    try{
+        const { emailId,password }=req.body;
+        if(!emailId || !password){
+            return res.status(400).json({error:"Please fill the data"})
+        }
+        const userLogin=await Detail.findOne({emailId:emailId});
+       //alert(userLogin);
+        if(userLogin)
+        {
+            const isMatch=await bcrypt.compare(password, userLogin.password);
+            if(!isMatch){
+                res.status(400).json({error:"Invalid credentials "});
+            }else{
+                res.json({message: "user Sigin successful"})
+            }
+        }else{
+            res.status(400).json({error:"Invalid credentials"});
+        }
+    }catch(err){
+        console.log(err);
+    }
 });
 
 module.exports=router;
